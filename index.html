@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Simples</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 60px;
+        }
+        input, button {
+            padding: 8px;
+            margin: 5px;
+            font-size: 16px;
+        }
+        #resultado {
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Calculadora</h2>
+    <input type="number" id="num1" >
+    <input type="number" id="num2" placeholder="Segundo número">
+    <br>
+    <button onclick="calcular('+')">+</button>
+    <button onclick="calcular('-')">-</button>
+    <button onclick="calcular('*')">*</button>
+    <button onclick="calcular('/')">/</button>
+    <div id="resultado"></div>
+    <script>
+        function calcular(operacao) {
+            var n1 = parseFloat(document.getElementById("num1").value);
+            var n2 = parseFloat(document.getElementById("num2").value);
+            var resultado;
+            if (operacao === "+") {
+                resultado = n1 + n2;
+            } else if (operacao === "-") {
+                resultado = n1 - n2;
+            } else if (operacao === "*") {
+                resultado = n1 * n2;
+            } else if (operacao === "/") {
+                if (n2 === 0) {
+                    resultado = "Erro: divisão por zero";
+                } else {
+                    resultado = n1 / n2;
+                }
+            }
+            document.getElementById("resultado").innerText = "Resultado: " + resultado;
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,101 @@
+Passos:
+
+1 - No VSCode:
+===============
+
+Executar no Bash:
+=======
+
+npm install express
+npm install mysql2
+npm install cors
+npm install nodemon --save-dev
+
+Para que serve cada biblioteca?
+===============================
+Biblioteca	Função
+express		Cria o servidor Web/API
+mysql2		Conecta o Node.js ao MySQL
+cors		Permite que o HTML acesse a API
+nodemon		Reinicia o servidor automaticamente durante o desenvolvimento
+
+
+2 - Acessar o Xampp
+===================
+
+No Painel
+=========
+Iniciar o Apache
+Iniciar o MySQL
+
+3 - Acessar o Banco de Dados
+============================
+
+No Navegador
+============
+http://localhost/phpmyadmin/
+
+Na aba SQL executar:
+====================
+
+** criação da tabela ***
+
+CREATE DATABASE cadastro;
+
+USE cadastro;
+
+CREATE TABLE pessoas(
+
+id INT AUTO_INCREMENT PRIMARY KEY,
+
+nome VARCHAR(100),
+
+idade INT,
+
+telefone VARCHAR(30),
+
+cidade VARCHAR(100)
+
+
+4 - GitHub
+==========
+
+-Acessar o GitHub com o link abaixo:
+
+https://github.com/Fausto257/Exercicios_Codigo
+
+- Baixar o programa:
+
+consulta.js
+
+5 - VSCode
+==========
+
+- Abrir o programa Consulta.js
+
+- Executar no Terminal do VsCode
+node consulta.js
+
+
+
+
+
+
+
+
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

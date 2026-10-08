@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"          content="width=device-width, initial-scale=1.0">
+    <title>Clima e Cotação</title>
+    <style>
+
+        /* ==============================
+           CONFIGURAÇÕES GERAIS
+           ============================== */
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #ccc;
+            text-align: center;
+        }
+
+        h1 {
+            color: #1565C0;
+        }
+
+        h2 {
+            color: #333;
+            margin-top: 30px;
+        }
+
+        button {
+            padding: 12px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #1565C0;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0D47A1;
+        }
+
+        .resultado {
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #eeeeee;
+            border-radius: 5px;
+            min-height: 30px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Consultas de APIs</h1>
+        <!-- =====================================
+             CONSULTA DO CLIMA
+             ===================================== -->
+
+        <h2>Clima de São Paulo</h2>
+        <button onclick="consultarClima()"> Consultar Clima  </button>
+
+        <div id="resultadoClima" class="resultado">
+            Clique no botão para consultar o clima.
+        </div>
+
+        <!-- =====================================
+             CONSULTA DO DÓLAR
+             ===================================== -->
+        <h2>Cotação do Dólar</h2>
+        <button onclick="consultarDolar()">  Consultar Dólar  </button>
+
+        <div id="resultadoDolar"  class="resultado">
+            Clique no botão para consultar a cotação.
+        </div>
+    </div>
+
+
+    <script>
+
+        // ==================================================
+        // CONSULTAR CLIMA
+        // ==================================================
+        async function consultarClima() {
+            const resultado = document.getElementById("resultadoClima");
+            resultado.innerHTML =  "Consultando o clima...";
+
+            try {
+
+                /*
+                    Coordenadas de São Paulo
+                    Latitude:  -23.55
+                    Longitude: -46.63
+                */
+
+                const url =
+                    "https://api.open-meteo.com/v1/forecast" +
+                    "?latitude=-23.55" +
+                    "&longitude=-46.63" +
+                    "&current=temperature_2m,wind_speed_10m" +
+                    "&timezone=America%2FSao_Paulo";
+
+                // Faz a chamada para a API
+                const resposta = await fetch(url);
+
+                // Transforma a resposta em JSON
+                const dados = await resposta.json();
+
+                // Obtém os valores retornados
+                const temperatura = dados.current.temperature_2m;
+
+                const velocidadeVento = dados.current.wind_speed_10m;
+
+                // Mostra o resultado
+                resultado.innerHTML = `
+                    <strong>São Paulo - SP</strong>
+                    <br><br>
+                    Temperatura:
+                    ${temperatura} °C
+                    <br>
+                    Velocidade do vento:
+                    ${velocidadeVento} km/h
+
+                `;
+
+            }
+
+            catch (erro) {
+
+                resultado.innerHTML = "Erro ao consultar o clima.";
+                console.error(erro);
+
+            }
+
+        }
+
+
+        // ==================================================
+        // CONSULTAR DÓLAR
+        // ==================================================
+
+        async function consultarDolar() {
+            const resultado =  document.getElementById("resultadoDolar");
+            resultado.innerHTML ="Consultando cotação...";
+
+            try {
+
+                /*
+                    API gratuita:
+                    AwesomeAPI
+                    USD-BRL =
+                    Dólar para Real brasileiro
+                */
+
+                const url =
+                    "https://economia.awesomeapi.com.br/json/last/USD-BRL";
+
+                // Faz a chamada para a API
+                const resposta = await fetch(url);
+
+                // Converte a resposta para JSON
+                const dados = await resposta.json();
+                /*
+                    A API retorna os dados
+                    dentro de USD_BRL
+                */
+                const dolar =  dados.USDBRL;
+                const valorCompra = Number(dolar.bid).toFixed(2);
+                const valorVenda = Number(dolar.ask).toFixed(2);
+                const dataHora = dolar.create_date;
+
+                // Mostra o resultado
+                resultado.innerHTML = `
+
+                    <strong>Dólar / Real</strong>
+                    <br><br>
+                    Compra:
+                    R$ ${valorCompra}
+                    <br>
+                    Venda:
+                    R$ ${valorVenda}
+                    <br>
+                    Data/Hora:
+                    ${dataHora}
+
+                `;
+
+            }
+            catch (erro) {
+
+                resultado.innerHTML ="Erro ao consultar a cotação.";
+                console.error(erro);
+
+            }
+
+        }
+
+    </script>
+
+</body>
+
+</html>
